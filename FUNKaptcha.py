@@ -1,7 +1,7 @@
 print("Credits to acier P;\n Created by https://github.com/qertyuiop12345678")
 import colorama
 from colorama import Style,Fore
-print(Fore.GREEN + 'Credits to AcierP, Faveish on ROBLOX, and antony878 on RIBLOX!')
+print(Fore.GREEN + 'Credits to AcierP, and https://github.com/qertyuiop12345678 !')
 #Credits to AcierP
 import speech_recognition as sr
 import requests
