@@ -1,8 +1,3 @@
-print("Credits to acier P;\n Created by https://github.com/qertyuiop12345678")
-import colorama
-from colorama import Style,Fore
-print(Fore.GREEN + 'Credits to AcierP, and https://github.com/qertyuiop12345678 !')
-#Credits to AcierP
 import speech_recognition as sr
 import requests
 import termcolor
@@ -46,7 +41,6 @@ def getDirectory(name):
 	return path
 
 def solveCaptcha(token, proxy, threadnum):
-	global session_token,hasCompleted
 	session_token = token.split('|')[0]
 	print(f'[{threadnum}]: Attempting to solve {session_token}')
 	r = requests.get(f'https://client-api.arkoselabs.com/fc/get_audio/?session_token={session_token}&analytics_tier=40&r=us-east-1&game=1&language=en', proxies=proxy)
@@ -85,8 +79,6 @@ def solveCaptcha(token, proxy, threadnum):
 		if r.json()['response'] == 'correct':
 			print(termcolor.colored(f'[{threadnum}]: Successfully solved captcha!', color='green'))
 			print(r.text)
-			hasCompleted = True
-			ckey = session_token
 		elif r.json()['response'] != 'correct':
 			print(f'[{threadnum}]: ratelimited on funcaptcha API or response was incorrect. Retrying.')
 			proxy = {"https": "https://" + next(ProxyPool)}
@@ -97,23 +89,11 @@ def solveCaptcha(token, proxy, threadnum):
 	except:
 		pass
 
-def worker(proxy, threadnum,n):
-	token = get_token()
-	solveCaptcha(token, proxy, threadnum)
-gacer = "on"
-def Solve():
-  global gacer
-  while gacer == 'on':
-   global proxy,ProxyPool
-   for threadnum in range(50):
-    proxy = {"https": "https://" + next(ProxyPool)}
-   threading.Thread(target=worker, args=[proxy, threadnum]).start()
-  else:
-    print('Stopped.')
-def solverm():
-  Solve()
-  while Solve():
-   if hasCompleted == True:
-    print('Completed.')
-    gacer = 'off'
-    return session_token
+def worker(proxy, threadnum):
+	while True:
+		token = get_token()
+		solveCaptcha(token, proxy, threadnum)
+
+#for threadnum in range(50):
+proxy = {"https": "https://" + next(ProxyPool)}
+#	threading.Thread(target=worker, args=[proxy, threadnum]).start()
